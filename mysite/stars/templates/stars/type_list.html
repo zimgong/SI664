@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">    
+    <title>Type List</title>
+</head>
+<body>
+    {% extends "base_bootstrap.html" %}
+
+    {% block content %}
+        <h1>Type List</h1>
+        {% if type_list %}
+        <ul>
+            {% for type in type_list %}
+                <li>
+                    {{ type.name }}
+                    (<a href="{% url 'stars:type_update' type.id %}">Update</a> |
+                    <a href="{% url 'stars:type_delete' type.id %}">Delete</a>) <br/>
+                </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+            <p>There are no types in the library.</p>
+        {% endif %}
+        <p><a href="{% url 'stars:type_create' %}">Add a type</a></p>
+        <p>
+            <a href="{% url 'stars:all' %}">Back to stars</a>
+        </p>
+    {% endblock %}
+</body>
+</html>
