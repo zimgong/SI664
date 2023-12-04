@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import MinLengthValidator
 from django.contrib.auth.models import User
 from django.conf import settings
+from taggit.managers import TaggableManager
 
 
 class Ad(models.Model):
@@ -12,8 +13,8 @@ class Ad(models.Model):
     )
     price = models.DecimalField(max_digits=7, decimal_places=2, null=True)
     text = models.TextField()
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL,
-                              on_delete=models.CASCADE)
+    tags = TaggableManager(blank=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -21,8 +22,9 @@ class Ad(models.Model):
     picture = models.BinaryField(null=True, editable=True)
     content_type = models.CharField(
         max_length=256, null=True, help_text='The MIMEType of the file')
+    
     owner = models.ForeignKey(settings.AUTH_USER_MODEL,
-                              on_delete=models.CASCADE)
+                              on_delete=models.CASCADE, related_name='ad_owner')
     comments = models.ManyToManyField(settings.AUTH_USER_MODEL,
                                       through='Comment', related_name='comments_owned')
 
@@ -43,7 +45,7 @@ class Comment(models.Model):
 
     ad = models.ForeignKey(Ad, on_delete=models.CASCADE)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL,
-                              on_delete=models.CASCADE)
+                              on_delete=models.CASCADE, related_name='ad_comment_owner')
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
