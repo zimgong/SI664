@@ -25,7 +25,7 @@ class AdListView(OwnerListView):
             query = Q(title__icontains=strval)
             query.add(Q(text__icontains=strval), Q.OR)
             query.add(Q(tags__name__in=[strval]), Q.OR)
-            ad_list = Ad.objects.filter(query).select_related().order_by('-updated_at')[:10]
+            ad_list = Ad.objects.filter(query).select_related().distinct().order_by('-updated_at')[:10]
         else:
             ad_list = Ad.objects.all().order_by('-updated_at')[:10]
 
