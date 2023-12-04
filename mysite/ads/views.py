@@ -24,6 +24,7 @@ class AdListView(OwnerListView):
         if strval:
             query = Q(title__icontains=strval)
             query.add(Q(text__icontains=strval), Q.OR)
+            query.add(Q(tags__name__in=[strval]), Q.OR)
             ad_list = Ad.objects.filter(query).select_related().order_by('-updated_at')[:10]
         else:
             ad_list = Ad.objects.all().order_by('-updated_at')[:10]
@@ -71,6 +72,7 @@ class AdCreateView(LoginRequiredMixin, View):
         ad = form.save(commit=False)
         ad.owner = self.request.user
         ad.save()
+        form.save_m2m()
         return redirect(self.success_url)
 
 
@@ -94,6 +96,7 @@ class AdUpdateView(LoginRequiredMixin, View):
 
         ad = form.save(commit=False)
         ad.save()
+        form.save_m2m()
 
         return redirect(self.success_url)
 
