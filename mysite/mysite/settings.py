@@ -87,17 +87,24 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'ZimG386$ads',
+#         'USER': 'ZimG386',
+#         'PASSWORD': 'A8jwppepipy!',
+#         'HOST': 'ZimG386.mysql.pythonanywhere-services.com',
+#          'OPTIONS': {
+#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+#         },
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ZimG386$ads',
-        'USER': 'ZimG386',
-        'PASSWORD': 'A8jwppepipy!',
-        'HOST': 'ZimG386.mysql.pythonanywhere-services.com',
-         'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         },
-    }
 }
 
 # Password validation
