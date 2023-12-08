@@ -30,7 +30,7 @@ def index(request):
 
 class BookListView(generic.ListView):
     model = Book
-    paginate_by = 2
+    paginate_by = 20
 
 
 def book_detail_view(request, primary_key):
