@@ -32,7 +32,10 @@ class BookListView(generic.ListView):
     model = Book
     paginate_by = 20
 
+class BookDetailView(generic.DetailView):
+    model = Book
 
-def book_detail_view(request, primary_key):
-    book = get_list_or_404(Book, pk=primary_key)
-    return render(request, 'catalog/book_detail.html', context={'book': book})
+    def get(self, request, pk):
+        book = get_list_or_404(Book, id=pk)
+        context = {'book': book}
+        return render(request, 'catalog/book_detail.html', context)
